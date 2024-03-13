@@ -33,7 +33,7 @@ public class AuthListener {
                     .endpoint(httpServletRequest.getRequestURI())
                     .status(auditApplicationEvent.getAuthorizationDecision()
                             .isGranted() ? AccessStatus.AUTHENTICATED : AccessStatus.FORBIDDEN)
-                    .user(auditApplicationEvent.getAuthentication().get().getName())
+                    .userName(auditApplicationEvent.getAuthentication().get().getName())
                     .ip(httpServletRequest.getRemoteAddr()).build()
             );
         }

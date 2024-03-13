@@ -23,6 +23,6 @@ public class Audit {
     private String endpoint;
     @Enumerated(EnumType.STRING)
     private AccessStatus status;
-    private String user;
+    private String userName;
     private String ip;
 }
