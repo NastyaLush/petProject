@@ -38,7 +38,10 @@ public class ClientWebSocketHandler extends TextWebSocketHandler {
     @Override
     public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
         log.info("error occurred " + session);
-        sessions.get(session).close();
+        WebSocketSession webSocketSession = sessions.get(session);
+        if (webSocketSession != null) {
+            webSocketSession.close();
+        }
         sessions.remove(session);
         session.close();
     }

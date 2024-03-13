@@ -33,7 +33,6 @@ public abstract class AbstractTest {
                     .content(objectMapper.writeValueAsString(requestBody));
             case "PATCH" -> MockMvcRequestBuilders.patch(url).contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(requestBody));
-            case "DELETE" -> MockMvcRequestBuilders.delete(url);
             case "POST" -> MockMvcRequestBuilders.post(url).contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(requestBody));
             default -> throw new IllegalArgumentException();

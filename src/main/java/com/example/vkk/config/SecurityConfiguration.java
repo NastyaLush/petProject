@@ -28,8 +28,7 @@ public class SecurityConfiguration {
             "/swagger-resources",
             "/swagger-resources/**",
             "/swagger-ui/**",
-            "/swagger-ui.html",
-            "/wc"};
+            "/swagger-ui.html"};
     private final JwtAuthFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
     private final LogoutHandler logoutHandler;
@@ -41,7 +40,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(req ->
                         req
                                 .requestMatchers(WHITE_LIST_URL).permitAll()
-                                .requestMatchers("/ws").hasRole("ROLE_ADMIN")
+                                .requestMatchers("/ws").hasRole("ADMIN")
                                 .anyRequest()
                                 .permitAll()
 
