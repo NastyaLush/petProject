@@ -1,9 +1,7 @@
 package com.example.vkk.service.webclient;
 
-import com.example.vkk.dto.Album;
-import com.example.vkk.dto.Photo;
-import com.example.vkk.dto.Post;
-import com.example.vkk.dto.PostComment;
+import com.example.vkk.entity.Album;
+import com.example.vkk.entity.Photo;
 import com.example.vkk.service.AlbumService;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -18,8 +16,8 @@ import java.util.List;
 @Service
 @CacheConfig(cacheNames = "album")
 public class AlbumServiceImpl implements AlbumService {
-    private final WebClient webClient;
     private static final String BASE_URL = "https://jsonplaceholder.typicode.com/albums";
+    private final WebClient webClient;
 
     public AlbumServiceImpl() {
         this.webClient = WebClient.create(BASE_URL);
@@ -27,7 +25,12 @@ public class AlbumServiceImpl implements AlbumService {
 
     @Override
     public List<Photo> photosById(Long id) {
-        return webClient.get().uri(uriBuilder -> uriBuilder.path("/{id}/photos").build(id)).retrieve().bodyToFlux(Photo.class).collectList().block();
+        return webClient.get()
+                .uri(uriBuilder -> uriBuilder.path("/{id}/photos").build(id))
+                .retrieve()
+                .bodyToFlux(Photo.class)
+                .collectList()
+                .block();
     }
 
     @Override
@@ -38,7 +41,11 @@ public class AlbumServiceImpl implements AlbumService {
     @Override
     @Cacheable
     public Album getById(Long id) {
-        return webClient.get().uri(uriBuilder -> uriBuilder.path("/{id}").build(id)).retrieve().bodyToMono(Album.class).block();
+        return webClient.get()
+                .uri(uriBuilder -> uriBuilder.path("/{id}").build(id))
+                .retrieve()
+                .bodyToMono(Album.class)
+                .block();
     }
 
     @Override
@@ -51,18 +58,32 @@ public class AlbumServiceImpl implements AlbumService {
     @Override
     @CachePut(key = "#id")
     public Album put(Long id, Album object) {
-        return webClient.put().uri(uriBuilder -> uriBuilder.path("/{id}").build(id)).body(BodyInserters.fromValue(object)).retrieve().bodyToMono(Album.class).block();
+        return webClient.put()
+                .uri(uriBuilder -> uriBuilder.path("/{id}").build(id))
+                .body(BodyInserters.fromValue(object))
+                .retrieve()
+                .bodyToMono(Album.class)
+                .block();
     }
 
     @Override
     @CachePut(key = "#id")
     public Album patch(Long id, Album object) {
-        return webClient.patch().uri(uriBuilder -> uriBuilder.path("/{id}").build(id)).body(BodyInserters.fromValue(object)).retrieve().bodyToMono(Album.class).block();
+        return webClient.patch()
+                .uri(uriBuilder -> uriBuilder.path("/{id}").build(id))
+                .body(BodyInserters.fromValue(object))
+                .retrieve()
+                .bodyToMono(Album.class)
+                .block();
     }
 
     @Override
     @CacheEvict
     public void delete(Long id) {
-        webClient.delete().uri(uriBuilder -> uriBuilder.path("/{id}").build(id)).retrieve().bodyToMono(Void.class).block();
+        webClient.delete()
+                .uri(uriBuilder -> uriBuilder.path("/{id}").build(id))
+                .retrieve()
+                .bodyToMono(Void.class)
+                .block();
     }
 }

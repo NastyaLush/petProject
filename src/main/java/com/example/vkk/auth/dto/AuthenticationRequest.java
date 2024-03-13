@@ -1,4 +1,4 @@
-package com.example.vkk.auth;
+package com.example.vkk.auth.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AuthenticationRequest {
 
-    private String email;
     String password;
+    private String email;
 }

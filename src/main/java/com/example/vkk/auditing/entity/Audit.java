@@ -1,9 +1,6 @@
-package com.example.vkk.auditing;
+package com.example.vkk.auditing.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,18 +13,16 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "_audit")
-public class AuditDTO {
+@Table(name = "audit")
+public class Audit {
     @Id
     @GeneratedValue
     private Integer id;
     private LocalDateTime localDateTime;
     private String method;
-
     private String endpoint;
-
-    private String status;
-
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private AccessStatus status;
+    private String user;
     private String ip;
 }

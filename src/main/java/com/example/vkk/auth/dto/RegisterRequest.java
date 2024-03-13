@@ -1,4 +1,4 @@
-package com.example.vkk.auth;
+package com.example.vkk.auth.dto;
 
 import com.example.vkk.user.Role;
 import lombok.AllArgsConstructor;
@@ -12,8 +12,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RegisterRequest {
 
-    private String firstname;
-    private String lastname;
     private String email;
     private String password;
     private Role role;

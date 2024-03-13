@@ -1,5 +1,6 @@
 package com.example.vkk.auditing;
 
+import com.example.vkk.auditing.entity.Audit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,7 @@ public class AuditService {
         this.auditRepository = auditRepository;
     }
 
-    public void create(AuditDTO auditDTO){
-        auditRepository.save(auditDTO);
+    public void create(Audit audit) {
+        auditRepository.save(audit);
     }
 }

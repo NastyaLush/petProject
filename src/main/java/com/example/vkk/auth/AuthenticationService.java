@@ -1,6 +1,9 @@
 package com.example.vkk.auth;
 
 
+import com.example.vkk.auth.dto.AuthenticationRequest;
+import com.example.vkk.auth.dto.AuthenticationResponse;
+import com.example.vkk.auth.dto.RegisterRequest;
 import com.example.vkk.config.JwtService;
 import com.example.vkk.token.Token;
 import com.example.vkk.token.TokenRepository;
@@ -30,8 +33,6 @@ public class AuthenticationService {
 
     public AuthenticationResponse register(RegisterRequest request) {
         var user = User.builder()
-                .firstname(request.getFirstname())
-                .lastname(request.getLastname())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(request.getRole())
@@ -94,7 +95,7 @@ public class AuthenticationService {
         final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         final String refreshToken;
         final String userEmail;
-        if (authHeader == null ||!authHeader.startsWith("Bearer ")) {
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             return;
         }
         refreshToken = authHeader.substring(7);

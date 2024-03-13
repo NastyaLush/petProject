@@ -1,13 +1,10 @@
 package com.example.vkk.service;
 
 
-
-
-import com.example.vkk.dto.Album;
-import com.example.vkk.dto.Post;
-import com.example.vkk.dto.PostComment;
-import com.example.vkk.dto.Todo;
-import com.example.vkk.dto.user.UserDTO;
+import com.example.vkk.entity.Album;
+import com.example.vkk.entity.Post;
+import com.example.vkk.entity.Todo;
+import com.example.vkk.entity.user.UserDTO;
 
 import java.util.List;
 
@@ -15,7 +12,7 @@ import java.util.List;
  * @author nivanov
  * @since %CURRENT_VERSION%
  */
-public interface UserService extends CommonService<UserDTO>{
+public interface UserService extends CommonService<UserDTO> {
 
     List<Album> getAlbumsByUserId(Long userId);
 

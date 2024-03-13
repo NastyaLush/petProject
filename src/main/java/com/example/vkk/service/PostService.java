@@ -1,7 +1,7 @@
 package com.example.vkk.service;
 
-import com.example.vkk.dto.Post;
-import com.example.vkk.dto.PostComment;
+import com.example.vkk.entity.Post;
+import com.example.vkk.entity.PostComment;
 
 import java.util.List;
 

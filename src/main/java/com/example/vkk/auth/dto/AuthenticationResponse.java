@@ -1,4 +1,4 @@
-package com.example.vkk.auth;
+package com.example.vkk.auth.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

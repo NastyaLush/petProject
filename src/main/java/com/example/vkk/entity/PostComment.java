@@ -1,8 +1,8 @@
-package com.example.vkk.dto;
+package com.example.vkk.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public record PostComment (
+public record PostComment(
         @JsonProperty("postId") Long postId,
         @JsonProperty("id") Long id,
         @JsonProperty("name") String name,

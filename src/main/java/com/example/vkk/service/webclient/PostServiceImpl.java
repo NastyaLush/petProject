@@ -1,7 +1,7 @@
 package com.example.vkk.service.webclient;
 
-import com.example.vkk.dto.Post;
-import com.example.vkk.dto.PostComment;
+import com.example.vkk.entity.Post;
+import com.example.vkk.entity.PostComment;
 import com.example.vkk.service.PostService;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -16,8 +16,8 @@ import java.util.List;
 @Service
 @CacheConfig(cacheNames = "post")
 public class PostServiceImpl implements PostService {
-    private final WebClient webClient;
     private static final String BASE_URL = "https://jsonplaceholder.typicode.com/posts";
+    private final WebClient webClient;
 
     public PostServiceImpl() {
         this.webClient = WebClient.create(BASE_URL);
@@ -31,12 +31,21 @@ public class PostServiceImpl implements PostService {
     @Override
     @Cacheable
     public Post getById(Long id) {
-        return webClient.get().uri(uriBuilder -> uriBuilder.path("/{id}").build(id)).retrieve().bodyToMono(Post.class).block();
+        return webClient.get()
+                .uri(uriBuilder -> uriBuilder.path("/{id}").build(id))
+                .retrieve()
+                .bodyToMono(Post.class)
+                .block();
     }
 
     @Override
     public List<PostComment> commentsById(Long id) {
-        return webClient.get().uri(uriBuilder -> uriBuilder.path("/{id}/comments").build(id)).retrieve().bodyToFlux(PostComment.class).collectList().block();
+        return webClient.get()
+                .uri(uriBuilder -> uriBuilder.path("/{id}/comments").build(id))
+                .retrieve()
+                .bodyToFlux(PostComment.class)
+                .collectList()
+                .block();
 
     }
 
@@ -49,20 +58,34 @@ public class PostServiceImpl implements PostService {
     @Override
     @CachePut(key = "#id")
     public Post put(Long id, Post object) {
-        return webClient.put().uri(uriBuilder -> uriBuilder.path("/{id}").build(id)).body(BodyInserters.fromValue(object)).retrieve().bodyToMono(Post.class).block();
+        return webClient.put()
+                .uri(uriBuilder -> uriBuilder.path("/{id}").build(id))
+                .body(BodyInserters.fromValue(object))
+                .retrieve()
+                .bodyToMono(Post.class)
+                .block();
 
     }
 
     @Override
     @CachePut(key = "#id")
     public Post patch(Long id, Post object) {
-        return webClient.patch().uri(uriBuilder -> uriBuilder.path("/{id}").build(id)).body(BodyInserters.fromValue(object)).retrieve().bodyToMono(Post.class).block();
+        return webClient.patch()
+                .uri(uriBuilder -> uriBuilder.path("/{id}").build(id))
+                .body(BodyInserters.fromValue(object))
+                .retrieve()
+                .bodyToMono(Post.class)
+                .block();
 
     }
 
     @Override
     @CacheEvict
     public void delete(Long id) {
-        webClient.delete().uri(uriBuilder -> uriBuilder.path("/{id}").build(id)).retrieve().bodyToMono(Void.class).block();
+        webClient.delete()
+                .uri(uriBuilder -> uriBuilder.path("/{id}").build(id))
+                .retrieve()
+                .bodyToMono(Void.class)
+                .block();
     }
 }

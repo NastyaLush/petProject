@@ -1,4 +1,4 @@
-package com.example.vkk.dto.user;
+package com.example.vkk.entity.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

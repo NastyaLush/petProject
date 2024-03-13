@@ -1,5 +1,8 @@
 package com.example.vkk.auth;
 
+import com.example.vkk.auth.dto.AuthenticationRequest;
+import com.example.vkk.auth.dto.AuthenticationResponse;
+import com.example.vkk.auth.dto.RegisterRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +27,7 @@ public class AuthenticationController {
     ) {
         return ResponseEntity.ok(service.register(request));
     }
+
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody AuthenticationRequest request
