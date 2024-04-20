@@ -1,6 +1,6 @@
-# VK Java Test Task
+# Pet проект
 Инструменты: java 21, Spring, Maven, Postgres, JPA
-## Требования:
+## Соответствует требованиям:
 
 ### 1. Реализовать обработчики, которые проксируют запросы к [jsonplaceholder](rhttps://jsonplaceholder.typicode.com/)
 Реализованы обработчики `GET, POST, PUT, PATCH, DELETE`:
