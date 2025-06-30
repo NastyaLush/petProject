@@ -1,21 +1,18 @@
-# Pet проект
-Инструменты: java 21, Spring, Maven, Postgres, JPA
-## Соответствует требованиям:
+# Pet Project: JSONPlaceholder API Proxy with Enhanced Security
+Tech Stack: Java 21, Spring Boot, Maven, PostgreSQL, JPA, Spring Security, OpenAPI 3.0
+## Key Features & Implementation:
 
-### 1. Реализовать обработчики, которые проксируют запросы к [jsonplaceholder](rhttps://jsonplaceholder.typicode.com/)
-Реализованы обработчики `GET, POST, PUT, PATCH, DELETE`:
-* `/api//users/` проксирует запрос к [https://jsonplaceholder.typicode.com/users](https://jsonplaceholder.typicode.com/users)
-* `/api/posts/` проксирует запрос к [https://jsonplaceholder.typicode.com/users](https://jsonplaceholder.typicode.com/posts)
-* `/api/albums/` проксирует запрос к [https://jsonplaceholder.typicode.com/users](https://jsonplaceholder.typicode.com/albums)
+### 1. REST API Proxy to [JSONPlaceholder](rhttps://jsonplaceholder.typicode.com/)
+Implemented `GET, POST, PUT, PATCH, DELETE` handlers for:
+* `/api//users/` -> [https://jsonplaceholder.typicode.com/users](https://jsonplaceholder.typicode.com/users)
+* `/api/posts/` -> [https://jsonplaceholder.typicode.com/users](https://jsonplaceholder.typicode.com/posts)
+* `/api/albums/` -> [https://jsonplaceholder.typicode.com/users](https://jsonplaceholder.typicode.com/albums)
 
-В приложении реализовано OpenApi 3.0, все достуные запросы можно посмотреть там
-### 2. Реализовать базовую авторизацию.
+Documented all endpoints with OpenAPI 3.0 (Swagger).
+### 2. JWT Authentication & Role-Based Access Control.
 
-Реализована авторизация с JWT токенами и ролями с помощью модуля Spring Security.
-
-### 3. Проработать ролевую модель доступа.
-
-Реализована расширенная ролевая модель с привилегиями
+- Secured endpoints using Spring Security with JWT tokens.
+- Implemented granular privileges (e.g., `POST_VIEWER`, `USER_EDITOR`) and predefined roles:
 
 ```java
  ADMIN(
@@ -52,59 +49,59 @@
     ));
 ```
 
-### 4. Реализовать ведение аудита действий.
+### 3. Action Auditing.
 
-Аудит реализовон с помощью имплементации интерфейса **AuthorizationEventPublisher**. Таким образом, публикуются все события авторизации, за исключением промежуточных.
+Tracked authentication events via custom **AuthorizationEventPublisher**.
+All auth actions are logged except for intermediate steps.
 
-Пример работы аудита
+Auditor work example
 ![img.png](imgs/audit.png)
 
-Текущие пользователи 
+Current users
 ![img_1.png](imgs/auth.png)
-### 5. Реализовать inmemory кэш.
+### 4. In-Memory Caching.
 
-Кэш реализован с помощью Spring Cache. 
-- Для запросов типа `GET` использована аннотация ` @Cacheable` 
-- Для запросов типа `POST, PUT, PATCH` использована аннотация ` @CachePut` 
-- Для запросов типа `DELETE` использована аннотация ` @CacheEvict` 
+Configured Spring Cache with  Spring Cache. 
+- `@Cacheable` for `GET` requests
+- `@CachePut` for `POST/PUT/PATCH`
+- `@CacheEvict` for `DELETE`
 
-Конфигурация кэшей находится в application.properties
+Cache policy
 ```spring.cache.caffeine.spec=maximumSize=500,expireAfterAccess=600s```
-## Дополнительно:
+## Additional Features:
 
-### 0. Простота запуска приложения.
-Конфигурация приложения находится в  `application.properties`
+### 0. Simple app run.
+Configuration is in  `application.properties`
 
-Для быстрого запуска и настройки базы данных использован `docker-compose`
+For fast run and database used `docker-compose`
 
-**Запуск приложения**:
+**App run**:
 ```
 docker-compose up
 mvn clean install
 java -jar target/vkk-0.0.1-SNAPSHOT.jar
 ```
 
-### 1. Использование базы данных.
+### 1. About database.
 
-В проекте использовалась реляционная база данных **Postgres**:
-* Для ведения аудита
-* Для хранения данных пользователей
+Used PostgreSQL for:
+* Audit logging
+* User management
 
+### 2. Creating REST Api for user creation.
 
-### 2. Добавление REST Api для создания пользователей.
+Added `/registry` endpoint for new user signups
 
-Добавлен обработчик **registry**, который позволяет зарегестрироваться новому пользователю по имени и паролю.
+### 3. Extended role-based access control.
+Privilege-based role model for granular access management.
 
-### 3. Расширенная ролевая модель.
-Используется ролевая модель с привилегиями для более детального управления доступом.
+### 4. Testing
+Comprehensive unit/integration tests for all endpoints
 
-### 4. Написание тестов
-Реализованы тесты для всех запросов
+### 5. WebSocket Proxy:
 
-### 5. Реализация конечной точки для запросов по WebSocket:
+Secured `/ws` endpoint (forwarding to [websocket.org](https://websocket.org/tools/websocket-echo-server/) echo server) with ADMIN-only access.
 
-Создана конечная точка по адресу /ws, которая перенаправляет запросы к [echo-server](https://websocket.org/tools/websocket-echo-server/).
-
-Для подключения к этой точке требуется наличие роли ADMIN. Все подключения к этой точке отслеживаются аудитом.
+To connect to this endpoint, you need the ADMIN role. All connections to this endpoint are tracked by audit.
 
 
